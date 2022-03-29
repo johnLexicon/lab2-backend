@@ -27,7 +27,6 @@ exports.get = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     const result = await Product.create(req.body);
-    console.log(result);
     res.status(201).json(result);
   } catch (err) {
     next(err, req, res);
