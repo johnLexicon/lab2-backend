@@ -26,16 +26,20 @@ app.use((err, req, res, next) => {
 
 /*---------  mongoose settings ------------*/
 
-mongoose.connect(
-  process.env.CONNECTION_STRING,
-  {
+mongoose
+  .connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-  },
-  (err) => {
-    if (err) throw err;
+  })
+  .then(() => {
     console.log('Connected to Mongo Database');
-  }
-);
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+mongoose.connection.on('error', (err) => {
+  console.log(err.message);
+});
 
 module.exports.handler = serverless(app);
