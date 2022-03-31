@@ -36,7 +36,7 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const productId = req.params.id;
-    const changes = { ...req.body, modified: Date.now() };
+    const changes = { ...req.body };
     const result = await Product.findOneAndUpdate({ _id: productId }, changes, {
       new: true
     });
