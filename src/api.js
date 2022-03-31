@@ -4,14 +4,18 @@ require('dotenv').config();
 const serverless = require('serverless-http');
 const cors = require('cors');
 const productsRouter = require('./routes/products');
+const authRouter = require('./routes/auth');
+const userRouter = require('./routes/users');
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json()); // Middleware that parses json data to javascript objects.
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use('/.netlify/functions/api/products', productsRouter);
+app.use('/.netlify/functions/api/auth', authRouter);
+app.use('/.netlify/functions/api/users', userRouter);
 
 /*---- Middleware for error handling ------*/
 
