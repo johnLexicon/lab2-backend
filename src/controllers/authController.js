@@ -24,3 +24,15 @@ exports.signUp = async (req, res, next) => {
     next(err, req, res);
   }
 };
+
+exports.login = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.login(email, password); // calling custom static method in User model.
+    const token = createToken(user.id);
+    res.cookie('jwtEcom', token, { httpOnly: true, maxAge: maxAge * 1000 }); //maxAge takes a value in milliseconds
+    res.status(200).json({ userId: user._id, jwt: token });
+  } catch (err) {
+    next(err, req, res);
+  }
+};
