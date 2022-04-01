@@ -28,4 +28,14 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// Static metod to login user
+userSchema.statics.login = async function (email, password) {
+  // The keyword "this" refers to the User model
+  const user = await this.findOne({ email });
+  if (!user) throw Error('Invalid credentials');
+  const success = await bcrypt.compare(password, user.password); // bcrypt.compare takes care of hashing the password before comparison.
+  if (!success) throw Error('Invalid credentials');
+  return user; // Returns the user if login was successful.
+};
+
 module.exports = mongoose.model('User', userSchema);
