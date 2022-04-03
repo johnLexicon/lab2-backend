@@ -36,3 +36,12 @@ exports.login = async (req, res, next) => {
     next(err, req, res);
   }
 };
+
+exports.logout = (req, res, next) => {
+  try {
+    res.cookie('jwtEcom', '', { maxAge: 1 }); // Deletes cookie containing jwt
+    res.status('200').json({ message: 'Logout success' });
+  } catch (err) {
+    next(err, req, res);
+  }
+};
