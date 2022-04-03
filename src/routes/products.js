@@ -1,14 +1,15 @@
 const productsRouter = require('express').Router();
 const productsController = require('../controllers/productsController');
+const { requireAuth } = require('../middleware/authMiddleware');
 
 productsRouter.get('/', productsController.getAll);
 
 productsRouter.get('/:id', productsController.get);
 
-productsRouter.post('/', productsController.create);
+productsRouter.post('/', requireAuth, productsController.create);
 
-productsRouter.patch('/:id', productsController.update);
+productsRouter.patch('/:id', requireAuth, productsController.update);
 
-productsRouter.delete('/:id', productsController.delete);
+productsRouter.delete('/:id', requireAuth, productsController.delete);
 
 module.exports = productsRouter;
